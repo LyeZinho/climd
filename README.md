@@ -35,6 +35,12 @@ climd
 
 Opens in the current directory, lists all `.md` files in the sidebar.
 
+### Commands
+
+```bash
+climd update    # Check for updates and upgrade to the latest version
+```
+
 ## Controls
 
 | Key | Action |
