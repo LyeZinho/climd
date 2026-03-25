@@ -8,25 +8,19 @@ use crate::update;
 #[command(version = env!("CARGO_PKG_VERSION"))]
 #[command(about = "A fast, terminal-based Markdown viewer", long_about = None)]
 pub struct Cli {
-    #[command(subcommand)]
-    pub command: Option<Commands>,
-}
-
-#[derive(Subcommand)]
-pub enum Commands {
-    Update,
+    #[arg(short, long, help = "Check for updates and install the latest version")]
+    pub update: bool,
 }
 
 pub fn run_cli() -> bool {
     let cli = Cli::parse();
 
-    match &cli.command {
-        Some(Commands::Update) => {
-            if let Err(e) = update::run_update() {
-                eprintln!("Update failed: {}", e);
-            }
-            return true;
+    if cli.update {
+        if let Err(e) = update::run_update() {
+            eprintln!("Update failed: {}", e);
         }
-        None => false,
+        return true;
     }
+
+    false
 }
