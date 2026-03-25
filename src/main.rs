@@ -1,8 +1,10 @@
 mod app;
+mod cli;
 mod event;
 mod fs;
 mod markdown;
 mod ui;
+mod update;
 
 use color_eyre::Result;
 use crossterm::event as crossterm_event;
@@ -13,6 +15,10 @@ use app::App;
 
 fn main() -> Result<()> {
     color_eyre::install()?;
+
+    if cli::run_cli() {
+        return Ok(());
+    }
 
     let current_dir = std::env::current_dir()?;
     let files = fs::discover_md_files(&current_dir)?;
