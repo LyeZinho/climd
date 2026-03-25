@@ -42,10 +42,13 @@ Opens in the current directory, lists all `.md` files in the sidebar.
 | `j` / `↓` | Next file / Scroll down |
 | `k` / `↑` | Previous file / Scroll up |
 | `Tab` | Switch between sidebar and content |
-| `Enter` | Open selected file |
+| `Enter` | Open file / Enter directory |
+| `Backspace` | Go to parent directory |
 | `g` / `Home` | Jump to top |
 | `G` / `End` | Jump to bottom |
 | `q` / `Esc` | Quit |
+
+Directories are shown in yellow with a `/` suffix.
 
 ## Building
 
