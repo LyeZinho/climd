@@ -1,0 +1,10 @@
+[package]
+name = "climd"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ratatui = "0.30"
+crossterm = "0.29"
+pulldown-cmark = "0.13"
+color-eyre = "0.6"
