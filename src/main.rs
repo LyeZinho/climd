@@ -1,9 +1,8 @@
 mod app;
 mod event;
+mod fs;
 mod markdown;
 mod ui;
-
-use std::path::PathBuf;
 
 use color_eyre::Result;
 use crossterm::event as crossterm_event;
@@ -15,11 +14,11 @@ use app::App;
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let files = discover_md_files()?;
-    let mut app = App::new(files);
+    let current_dir = std::env::current_dir()?;
+    let files = fs::discover_md_files(&current_dir)?;
+    let mut app = App::new(files, current_dir);
 
-    // Load first file if available
-    if app.selected_file().is_some() {
+    if app.selected_file_path().is_some() {
         event::load_initial_file(&mut app);
     }
 
@@ -40,15 +39,4 @@ fn run(mut terminal: DefaultTerminal, app: &mut App) -> Result<()> {
         }
     }
     Ok(())
-}
-
-fn discover_md_files() -> Result<Vec<PathBuf>> {
-    let mut files: Vec<PathBuf> = std::fs::read_dir(".")?
-        .filter_map(|entry| entry.ok())
-        .map(|entry| entry.path())
-        .filter(|path| path.extension().map(|ext| ext == "md").unwrap_or(false))
-        .collect();
-
-    files.sort();
-    Ok(files)
 }

@@ -9,7 +9,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::app::{ActivePane, App};
+use crate::app::{ActivePane, App, FileEntry};
 
 pub fn render(frame: &mut Frame, app: &mut App) {
     let chunks = Layout::default()
@@ -33,11 +33,16 @@ fn render_sidebar(frame: &mut Frame, app: &mut App, area: ratatui::layout::Rect)
         .files
         .iter()
         .map(|f| {
-            let name = f
-                .file_name()
-                .map(|n| n.to_string_lossy().to_string())
-                .unwrap_or_else(|| "???".to_string());
-            ListItem::new(name)
+            let name = match f {
+                FileEntry::Directory(n, _) => format!("{}/", n),
+                FileEntry::File(n, _) => n.clone(),
+            };
+            let style = if f.is_dir() {
+                Style::default().fg(Color::Yellow)
+            } else {
+                Style::default()
+            };
+            ListItem::new(name).style(style)
         })
         .collect();
 
@@ -67,9 +72,8 @@ fn render_content(frame: &mut Frame, app: &mut App, area: ratatui::layout::Rect)
     };
 
     let title = app
-        .selected_file()
-        .and_then(|f| f.file_name())
-        .map(|n| format!(" {} ", n.to_string_lossy()))
+        .selected_entry()
+        .map(|e| format!(" {} ", e.name()))
         .unwrap_or_else(|| " No file selected ".to_string());
 
     let block = Block::default()
