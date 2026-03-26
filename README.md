@@ -47,9 +47,9 @@ climd update    # Check for updates and upgrade to the latest version
 |-----|--------|
 | `j` / `↓` | Next file / Scroll down |
 | `k` / `↑` | Previous file / Scroll up |
+| `→` / `Enter` | Open file / Enter directory |
+| `←` / `Backspace` | Go to parent directory |
 | `Tab` | Switch between sidebar and content |
-| `Enter` | Open file / Enter directory |
-| `Backspace` | Go to parent directory |
 | `g` / `Home` | Jump to top |
 | `G` / `End` | Jump to bottom |
 | `q` / `Esc` | Quit |

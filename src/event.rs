@@ -7,8 +7,8 @@ pub fn handle_key(app: &mut App, key: KeyEvent) {
     match key.code {
         KeyCode::Char('q') | KeyCode::Esc => app.running = false,
         KeyCode::Tab => toggle_pane(app),
-        KeyCode::Enter => open_selected(app),
-        KeyCode::Backspace => go_up(app),
+        KeyCode::Enter | KeyCode::Right => open_selected(app),
+        KeyCode::Backspace | KeyCode::Left => go_up(app),
         KeyCode::Char('j') | KeyCode::Down => move_down(app),
         KeyCode::Char('k') | KeyCode::Up => move_up(app),
         KeyCode::Char('g') | KeyCode::Home => move_to_top(app),
